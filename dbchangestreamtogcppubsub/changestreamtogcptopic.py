@@ -21,8 +21,11 @@ class ChangeStreamToGCPTopic:
 
    
     def to_perform_mongo_changestream_to_gcp_topics(self):
+        # Creating connection to the MongoDb with its connection string
         mongo_client = MongoClient(self.mongoconnstr ,tlsCAFile=certifi.where())
+        #Connecting to Database from the Established connection
         db = mongo_client[self.dbname]
+        #Watcher to continusously watch all the operations that are happens in the all the collections in specified Database
         change_stream = db.watch(full_document="updateLookup")
 
         # Initialize Pub/Sub publisher
